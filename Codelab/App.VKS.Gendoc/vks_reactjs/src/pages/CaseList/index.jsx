@@ -48,22 +48,30 @@ function CaseList() {
             </tr>
           </thead>
           <tbody>
-            {data.map((row, idx) => (
-              <tr key={idx}>
-                <td>{row.soKS}</td>
-                <td>{row.nguyenDon}</td>
-                <td>{row.biDon}</td>
-                <td>{row.ngayThuLy}</td>
-                <td>
-                  <span className={row.tinhTrangType === 'processing' ? 'casel-status-processing' : 'casel-status-done'}>
-                    {row.tinhTrang}
-                  </span>
-                </td>
-                <td>
-                  <Link to="#" className="casel-link">Xem chi tiết</Link>
+            {data.length === 0 ? (
+              <tr>
+                <td colSpan="6" style={{ textAlign: 'center', padding: '32px', color: '#666', fontSize: 18 }}>
+                  Không có dữ liệu. Sử dụng button upload
                 </td>
               </tr>
-            ))}
+            ) : (
+              data.map((row, idx) => (
+                <tr key={idx}>
+                  <td>{row.soKS}</td>
+                  <td>{row.nguyenDon}</td>
+                  <td>{row.biDon}</td>
+                  <td>{row.ngayThuLy}</td>
+                  <td>
+                    <span className={row.tinhTrangType === 'processing' ? 'casel-status-processing' : 'casel-status-done'}>
+                      {row.tinhTrang}
+                    </span>
+                  </td>
+                  <td>
+                    <Link to="#" className="casel-link">Xem chi tiết</Link>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

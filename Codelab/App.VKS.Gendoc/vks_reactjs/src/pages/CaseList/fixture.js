@@ -15,6 +15,14 @@ const fixture = [
     tinhTrang: 'Đã hoàn tất',
     tinhTrangType: 'done',
   },
+  {
+    soKS: '156/TB-TLVA',
+    nguyenDon: 'Công ty Cổ phần Y',
+    biDon: 'Công ty TNHH Y',
+    ngayThuLy: '20/05/2024',
+    tinhTrang: 'Đã hoàn tất',
+    tinhTrangType: 'done',
+  },  
 ];
 
 export default fixture;
