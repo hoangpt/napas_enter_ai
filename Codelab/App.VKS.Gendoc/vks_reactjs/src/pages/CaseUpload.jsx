@@ -36,7 +36,7 @@ function CaseUpload() {
       formData.append('file', file);
       formData.append('use_fixtures', 'true');
 
-      const response = await fetch('http://localhost:5000/api/upload/extract-only', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/upload/extract-only`, {
         method: 'POST',
         body: formData,
       });
