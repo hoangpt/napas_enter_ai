@@ -1,10 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './style.css';
-import fixture from './fixture.js';
+import { useHoSo } from '../../providers/HoSoProvider.jsx';
 
 function CaseList() {
-  const data = fixture;
+  const { hoSoList: data, loading, error } = useHoSo();
+
+  if (loading) {
+    return (
+      <div className="casel-root">
+        <div className="casel-container" style={{ textAlign: 'center', padding: '100px 0' }}>
+          <div style={{ fontSize: 18, color: '#666' }}>Đang tải dữ liệu...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="casel-root">
+        <div className="casel-container" style={{ textAlign: 'center', padding: '100px 0' }}>
+          <div style={{ fontSize: 18, color: '#e74c3c' }}>Lỗi: {error}</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="casel-root">
@@ -28,22 +48,30 @@ function CaseList() {
             </tr>
           </thead>
           <tbody>
-            {data.map((row, idx) => (
-              <tr key={idx}>
-                <td>{row.soKS}</td>
-                <td>{row.nguyenDon}</td>
-                <td>{row.biDon}</td>
-                <td>{row.ngayThuLy}</td>
-                <td>
-                  <span className={row.tinhTrangType === 'processing' ? 'casel-status-processing' : 'casel-status-done'}>
-                    {row.tinhTrang}
-                  </span>
-                </td>
-                <td>
-                  <Link to="#" className="casel-link">Xem chi tiết</Link>
+            {data.length === 0 ? (
+              <tr>
+                <td colSpan="6" style={{ textAlign: 'center', padding: '32px', color: '#666', fontSize: 18 }}>
+                  Không có dữ liệu. Sử dụng button upload
                 </td>
               </tr>
-            ))}
+            ) : (
+              data.map((row, idx) => (
+                <tr key={idx}>
+                  <td>{row.soKS}</td>
+                  <td>{row.nguyenDon}</td>
+                  <td>{row.biDon}</td>
+                  <td>{row.ngayThuLy}</td>
+                  <td>
+                    <span className={row.tinhTrangType === 'processing' ? 'casel-status-processing' : 'casel-status-done'}>
+                      {row.tinhTrang}
+                    </span>
+                  </td>
+                  <td>
+                    <Link to="#" className="casel-link">Xem chi tiết</Link>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
