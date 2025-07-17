@@ -45,7 +45,20 @@ source venv/bin/activate  # Linux/Mac
 pip install -r requirements.txt
 ```
 
-3. Chạy ứng dụng với Swagger (KHUYẾN NGHỊ):
+3. Cấu hình Azure OpenAI (cho tính năng Upload OCR):
+```bash
+# Copy file .env.example thành .env
+copy .env.example .env  # Windows
+# hoặc
+cp .env.example .env    # Linux/Mac
+
+# Chỉnh sửa file .env với thông tin Azure OpenAI của bạn:
+AZURE_OPENAI_API_KEY=your_api_key_here
+AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/
+AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4-vision-preview
+```
+
+4. Chạy ứng dụng với Swagger (KHUYẾN NGHỊ):
 ```bash
 python app_swagger.py
 ```
@@ -79,6 +92,12 @@ Swagger cung cấp:
 ## API Endpoints
 
 **Tất cả endpoints được document đầy đủ tại Swagger UI: `/swagger/`**
+
+### Upload và OCR - `/api/upload`
+
+- `POST /api/upload/document` - Upload ảnh tài liệu pháp lý, OCR và lưu dữ liệu
+- `POST /api/upload/extract-only` - Chỉ OCR extract thông tin, không lưu database
+- `GET /api/upload/test` - Kiểm tra trạng thái API upload
 
 ### Nguyên đơn (Người khởi kiện) - `/api/nguyen-don`
 
@@ -131,7 +150,21 @@ curl -X POST http://localhost:5000/api/bi-don \
   -d '{"ten": "Trần Thị B", "dia_chi": "456 Đường XYZ, Quận 2, TP.HCM"}'
 ```
 
-### 3. Tạo hồ sơ thụ lý:
+### 3. Upload và OCR tài liệu pháp lý:
+```bash
+# Upload file ảnh để OCR và tự động tạo dữ liệu
+curl -X POST http://localhost:5000/api/upload/document \
+  -F "file=@path/to/legal_document.jpg"
+
+# Chỉ extract thông tin không lưu database
+curl -X POST http://localhost:5000/api/upload/extract-only \
+  -F "file=@path/to/legal_document.jpg"
+
+# Kiểm tra trạng thái upload API
+curl http://localhost:5000/api/upload/test
+```
+
+### 4. Tạo hồ sơ thụ lý:
 ```bash
 curl -X POST http://localhost:5000/api/ho-so \
   -H "Content-Type: application/json" \
@@ -145,17 +178,17 @@ curl -X POST http://localhost:5000/api/ho-so \
   }'
 ```
 
-### 4. Lấy danh sách hồ sơ:
+### 5. Lấy danh sách hồ sơ:
 ```bash
 curl http://localhost:5000/api/ho-so
 ```
 
-### 5. Tìm kiếm hồ sơ theo mã:
+### 6. Tìm kiếm hồ sơ theo mã:
 ```bash
 curl http://localhost:5000/api/ho-so?ma=HS001
 ```
 
-### 6. Lấy thống kê:
+### 7. Lấy thống kê:
 ```bash
 curl http://localhost:5000/api/statistics
 ```
@@ -218,6 +251,9 @@ Truy cập `http://localhost:5000/swagger/` để:
 ```bash
 # Test API với Swagger
 python test_swagger_api.py
+
+# Test Upload và OCR API
+python test_upload_api.py
 
 # Test API MVC thông thường  
 python test_vks_api.py
