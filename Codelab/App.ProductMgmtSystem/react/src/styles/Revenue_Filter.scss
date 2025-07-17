@@ -1,0 +1,61 @@
+.ant-form-item {
+  flex-direction: column;
+}
+.ant-form-item-label {
+  text-align: left;
+}
+.ant-form-item-label {
+  margin-top: 32px;
+  margin-bottom: 14px;
+}
+.ant-btn {
+  margin-left: 16px;
+}
+.ant-btn-background-ghost.ant-btn-primary {
+  color: #ff9800;
+  background: transparent;
+  border-color: #ff9800;
+  text-shadow: none;
+}
+
+.ant-btn-background-ghost.ant-btn-primary:hover,
+.ant-btn-background-ghost:hover,
+.ant-btn-background-ghost.ant-btn-primary:focus {
+  color: rgb(44, 42, 42);
+  background-color: #ff9800 !important;
+  border-color: #ff9800;
+}
+.ant-row:first-child {
+  justify-content: flex-end;
+}
+.ant-row:last-child {
+  justify-content: flex-end;
+}
+.collapse_search {
+  cursor: pointer;
+  color: #11b6f4;
+  text-decoration: underline;
+  margin-left: 20px;
+  margin-top: 27px;
+  font-style: italic;
+}
+
+p.thick {
+  font-weight: bold;
+  padding-left: 60px;
+  min-height: 30px;
+}
+
+.steps-content {
+  margin-top: 5px;
+  min-height: 200px;
+  text-align: left;
+  padding-top: 40px;
+  padding-left: 250px;
+}
+
+.ant-steps-item-finish
+  > .ant-steps-item-container
+  > .ant-steps-item-tail::after {
+  background-color: brown !important;
+}

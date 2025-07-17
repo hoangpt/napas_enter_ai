@@ -1,0 +1,17 @@
+.ant-table-body::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+}
+.ant-table-body::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+}
+.ant-table-body::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+}
+.ant-table-thead > tr > th {
+  background-color: #c8ecfa;
+}
+.button-props {
+  color: white;
+}

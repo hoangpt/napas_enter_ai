@@ -1,0 +1,202 @@
+.app-layout {
+  min-height: 100vh;
+
+  .app-icon {
+    font-size: $font-size-20;
+  }
+
+  .app-sider {
+    background: $color-light;
+    z-index: 10;
+
+    .app-logo {
+      position: fixed;
+      width: $sidebar-width;
+      height: 122px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: $transition-base;
+
+      img {
+        max-width: 180px;
+        max-height: 90px;
+      }
+    }
+
+    .app-menu {
+      &.ant-menu {
+        position: fixed;
+        width: $sidebar-width;
+        top: 122px;
+        user-select: none;
+        max-height: calc(100vh - 122px);
+        padding-bottom: 52px;
+        overflow-y: auto;
+
+        .ant-menu-item,
+        .ant-menu-submenu-title {
+          margin: 0;
+          height: 48px;
+          line-height: 48px;
+        }
+      }
+
+      &.ant-menu-dark {
+        background: $color-sidebar;
+
+        &::-webkit-scrollbar-track {
+          background: $color-sidebar;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: $color-text-secondary;
+        }
+
+        .app-icon {
+          margin-right: $align-base;
+          color: $color-text-secondary;
+          vertical-align: -0.25em;
+          transition: $transition-base;
+          display: inline-block;
+        }
+
+        .ant-menu-item {
+          color: $color-text-secondary;
+          background: none;
+        }
+
+        .ant-menu-item-active,
+        .ant-menu-submenu-active,
+        .ant-menu-submenu-open {
+          .app-icon {
+            color: $color-light;
+          }
+        }
+
+        .ant-menu-item-selected,
+        .ant-menu-submenu-selected {
+          .app-icon {
+            color: $color-primary;
+          }
+        }
+
+        .ant-menu-item-selected,
+        .ant-menu-submenu-selected .ant-menu-submenu-title {
+          font-weight: $font-weight-bold;
+        }
+
+        .ant-menu-submenu-open .ant-menu-submenu-title,
+        .ant-menu-sub {
+          background: $color-sidebar-focus;
+          box-shadow: none;
+        }
+
+        .ant-menu-sub .ant-menu-item {
+          padding-left: 60px !important;
+        }
+      }
+    }
+
+    .app-footer {
+      position: fixed;
+      padding: $align-base 0;
+      bottom: 0;
+      width: $sidebar-width;
+      line-height: $line-height-20;
+      text-align: center;
+      color: $color-text-secondary;
+      background: $color-light;
+    }
+
+    &.collapsed {
+      .app-logo {
+        width: $sidebar-collapsed-width;
+        height: 92px;
+        img {
+          width: 60px;
+        }
+      }
+
+      .app-menu {
+        width: $sidebar-collapsed-width;
+        top: 92px;
+      }
+    }
+  }
+
+  .app-header {
+    background: $color-light;
+    padding: 0 $align-base;
+    user-select: none;
+    border-bottom: $border-base;
+    display: flex;
+    justify-content: space-between;
+
+    .app-icon {
+      cursor: pointer;
+    }
+
+    .app-user {
+      position: relative;
+      margin-left: $align-base;
+      cursor: pointer;
+
+      .ant-avatar {
+        top: -1px;
+      }
+
+      span {
+        margin-left: $align-half;
+      }
+    }
+  }
+
+  .app-content {
+    display: flex;
+    flex-direction: column;
+
+    .app-breadcrumb {
+      padding: $align-base;
+      @include typo-caption;
+    }
+
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      flex: auto;
+
+      .app-container-head {
+        padding: 0 $align-base;
+
+        .app-title {
+          margin-bottom: $align-half;
+          @include typo-h1;
+        }
+      }
+
+      .app-container-body {
+        flex: auto;
+        padding: $align-base;
+        background: $color-background;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .app-layout {
+    .app-header {
+      .app-user {
+        .ant-avatar {
+          margin-left: 0;
+        }
+        .label {
+          display: none;
+        }
+      }
+    }
+    .ant-layout-sider-collapsed {
+      display: none;
+    }
+  }
+}

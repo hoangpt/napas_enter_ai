@@ -1,0 +1,168 @@
+/**
+ * Colors
+ */
+
+// Branding colors
+$color-primary: #eb1f3a;
+@mixin primary-select {
+  background-color: #eb1f3a0c !important;
+  border: 1px solid $color-primary;
+}
+@mixin primary-border {
+  background: #ffffff;
+  border: 1px solid $color-primary;
+}
+$color-secondary: #047fff;
+@mixin secondary-select {
+  background: #496ad90c !important;
+  border: 1px solid $color-secondary;
+}
+@mixin secondary-border {
+  background: #ffffff;
+  border: 1px solid $color-secondary;
+}
+
+// Sidebar colors
+$color-sidebar: #1c222b;
+$color-sidebar-focus: #272d36;
+$sidebar-width: 270px;
+$sidebar-collapsed-width: 80px;
+
+// Status colors
+$color-error: #ed1b23;
+$color-error-bg: #fff2f2;
+@mixin error-border {
+  background: $color-error-bg;
+  border: 1px solid #c0171319;
+}
+$color-pending: #f78212;
+$color-pending-bg: #fcf8e3;
+@mixin pending-border {
+  background: $color-pending-bg;
+  border: 1px solid #f7821219;
+}
+$color-success: #53c305;
+$color-success-bg: #f4fff2;
+@mixin success-border {
+  background: $color-success-bg;
+  border: 1px solid #53c30519;
+}
+$color-link: #047fff;
+$color-link-bg: #f0f7ff;
+@mixin link-border {
+  background: $color-link-bg;
+  border: 1px solid #047fff33;
+}
+$color-soft-alert: #f6c005;
+$color-disable: #d2d2d2;
+$color-warning: #ffaa2a;
+
+// Content colors
+$color-text-primary: #333;
+$color-text-secondary: #8f9598;
+$color-placeholder: #b4b4b4;
+$color-background: #f5f5f5;
+$color-border: #e0e0e0;
+$color-light: #ffffff;
+@mixin light-border {
+  background: $color-light;
+  border: 1px solid $color-border;
+}
+@mixin light-shadow {
+  background: $color-light;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+}
+
+/**
+* Transitions
+*/
+
+$transition-base: all 0.2s ease;
+
+/**
+* Typography
+*/
+
+// Font size
+$font-size-20: 20px;
+$font-size-18: 18px;
+$font-size-16: 16px;
+$font-size-14: 14px;
+$font-size-12: 12px;
+
+// Font weight
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+// Line height
+$line-height-24: 24px;
+$line-height-20: 20px;
+$line-height-16: 16px;
+
+@mixin typo-h1 {
+  font-size: $font-size-20;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-24;
+}
+@mixin typo-h2 {
+  font-size: $font-size-16;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-24;
+}
+@mixin typo-h3 {
+  font-size: $font-size-14;
+  font-weight: $font-weight-medium;
+  line-height: $line-height-20;
+}
+@mixin typo-body-16 {
+  font-size: $font-size-16;
+  line-height: $line-height-24;
+}
+@mixin typo-body-14 {
+  font-size: $font-size-14;
+  line-height: $line-height-20;
+}
+@mixin typo-caption {
+  font-size: $font-size-12;
+  line-height: $line-height-16;
+}
+
+// Alignment
+$align-base: 16px;
+$align-half: 8px;
+
+// Border
+$border-base: 1px solid $color-border;
+$border-radius-base: 4px;
+$border-radius-round: 24px;
+
+// Border and box shadow
+@mixin link-border-box-shadow {
+  border-color: $color-link !important;
+  box-shadow: 0 0 0 2px rgba(4, 127, 255, 0.2) !important;
+}
+
+// Button
+@mixin color-button {
+  color: $color-light !important;
+  border: none;
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+// Icon
+@mixin clickable-icon {
+  font-size: $font-size-20;
+  cursor: pointer;
+}
+
+// Ellipsis
+@mixin line-ellipsis($line: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+}

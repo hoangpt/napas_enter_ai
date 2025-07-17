@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders correctly 1`] = `
+<div
+  class="ant-card content-block"
+>
+  <div
+    class="ant-card-body"
+  />
+</div>
+`;

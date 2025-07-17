@@ -1,0 +1,472 @@
+/**
+ * Common styles for application
+ */
+// Margin
+.m-base {
+  margin: $align-base !important;
+}
+.mx-base {
+  margin-left: $align-base !important;
+  margin-right: $align-base !important;
+}
+.my-base {
+  margin-top: $align-base !important;
+  margin-bottom: $align-base !important;
+}
+.mt-base {
+  margin-top: $align-base !important;
+}
+.mb-base {
+  margin-bottom: $align-base !important;
+}
+.ml-base {
+  margin-left: $align-base !important;
+}
+.mr-base {
+  margin-right: $align-base !important;
+}
+.m-half {
+  margin: $align-half !important;
+}
+.mx-half {
+  margin-left: $align-half !important;
+  margin-right: $align-half !important;
+}
+.my-half {
+  margin-top: $align-half !important;
+  margin-bottom: $align-half !important;
+}
+.mt-half {
+  margin-top: $align-half !important;
+}
+.mb-half {
+  margin-bottom: $align-half !important;
+}
+.ml-half {
+  margin-left: $align-half !important;
+}
+.mr-half {
+  margin-right: $align-half !important;
+}
+.m-0 {
+  margin: 0 !important;
+}
+.mx-0 {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.my-0 {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+.mt-0 {
+  margin-top: 0 !important;
+}
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+.ml-0 {
+  margin-left: 0 !important;
+}
+.mr-0 {
+  margin-right: 0 !important;
+}
+
+// Padding
+.p-base {
+  padding: $align-base !important;
+}
+.px-base {
+  padding-left: $align-base !important;
+  padding-right: $align-base !important;
+}
+.py-base {
+  padding-top: $align-base !important;
+  padding-bottom: $align-base !important;
+}
+.pt-base {
+  padding-top: $align-base !important;
+}
+.pb-base {
+  padding-bottom: $align-base !important;
+}
+.pl-base {
+  padding-left: $align-base !important;
+}
+.pr-base {
+  padding-right: $align-base !important;
+}
+.p-half {
+  padding: $align-half !important;
+}
+.px-half {
+  padding-left: $align-half !important;
+  padding-right: $align-half !important;
+}
+.py-half {
+  padding-top: $align-half !important;
+  padding-bottom: $align-half !important;
+}
+.pt-half {
+  padding-top: $align-half !important;
+}
+.pb-half {
+  padding-bottom: $align-half !important;
+}
+.pl-half {
+  padding-left: $align-half !important;
+}
+.pr-half {
+  padding-right: $align-half !important;
+}
+.p-0 {
+  padding: 0 !important;
+}
+.px-0 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.py-0 {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+.pt-0 {
+  padding-top: 0 !important;
+}
+.pb-0 {
+  padding-bottom: 0 !important;
+}
+.pl-0 {
+  padding-left: 0 !important;
+}
+.pr-0 {
+  padding-right: 0 !important;
+}
+
+// Spacing
+.w-100 {
+  width: 100%;
+}
+
+// Scrollbar
+* {
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: $color-background;
+}
+::-webkit-scrollbar-thumb {
+  background: $color-border;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: $color-disable;
+}
+
+// Text typography
+.text-primary {
+  color: $color-primary !important;
+}
+.text-error {
+  color: $color-error !important;
+}
+.text-warning {
+  color: $color-warning !important;
+}
+.text-pending {
+  color: $color-pending !important;
+}
+.text-success {
+  color: $color-success !important;
+}
+.text-link {
+  color: $color-link !important;
+}
+.text-h1 {
+  @include typo-h1;
+}
+.text-h2 {
+  @include typo-h2;
+}
+.text-h3 {
+  @include typo-h3;
+}
+.text-16 {
+  @include typo-body-16;
+}
+.text-14 {
+  @include typo-body-14;
+}
+.text-caption {
+  @include typo-caption;
+}
+.text-normal {
+  font-weight: $font-weight-regular !important;
+}
+.text-medium {
+  font-weight: $font-weight-medium !important;
+}
+.text-bold {
+  font-weight: $font-weight-bold !important;
+}
+.text-break {
+  word-break: break-word;
+}
+.text-linethrough {
+  text-decoration: line-through !important;
+}
+
+// Display type
+.d-block {
+  display: block !important;
+}
+.d-none {
+  display: none !important;
+}
+.d-inline-block {
+  display: inline-block !important;
+}
+.d-flex {
+  display: flex !important;
+}
+.d-inline-flex {
+  display: inline-flex !important;
+}
+
+// Flexbox
+.flex-row {
+  flex-direction: row !important;
+}
+.flex-column {
+  flex-direction: column !important;
+}
+.flex-1 {
+  flex: 1 !important;
+}
+.align-items-start {
+  align-items: flex-start !important;
+}
+.align-items-end {
+  align-items: flex-end !important;
+}
+.align-items-center {
+  align-items: center !important;
+}
+.justify-content-start {
+  justify-content: flex-start !important;
+}
+.justify-content-end {
+  justify-content: flex-end !important;
+}
+.justify-content-center {
+  justify-content: center !important;
+}
+.justify-content-between {
+  justify-content: space-between !important;
+}
+
+// Alignment
+.text-left {
+  text-align: left !important;
+}
+.text-right {
+  text-align: right !important;
+}
+.text-center {
+  text-align: center !important;
+}
+.text-justify {
+  text-align: justify !important;
+}
+.float-left {
+  float: left !important;
+}
+.float-right {
+  float: right !important;
+}
+.float-none {
+  float: none !important;
+}
+
+// Whitespace
+.white-space-pre {
+  white-space: pre;
+}
+
+// Button
+.link-button {
+  @include color-button;
+  background: $color-link !important;
+}
+
+// Icon
+.primary-icon {
+  @include clickable-icon;
+  color: $color-primary;
+}
+.link-icon {
+  @include clickable-icon;
+  color: $color-link;
+}
+
+// Customize style for components
+.app-spin {
+  position: fixed;
+  top: 30%;
+  width: 100%;
+}
+.theme-switch {
+  background-color: rgb(67, 69, 70);
+  .ant-switch-handle::before {
+    background-color: #f78212;
+  }
+  img {
+    margin-top: -2px;
+  }
+}
+p {
+  margin-top: 10px;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+}
+.customInput {
+  // margin-bottom: 20px !important;
+  border: 1px solid #c4c4c4;
+  box-sizing: border-box;
+  border-radius: 5px;
+
+  width: 480px;
+  height: 36px;
+}
+
+.customSelect {
+  /* White */
+
+  background: #ffffff;
+  /* place holder */
+
+  border: 1px #c4c4c4;
+  box-sizing: border-box;
+  border-radius: 5px;
+  width: 480px !important;
+}
+
+.btnCustom {
+  color: #004481 !important;
+  border-color: #ff9800 !important;
+  border-radius: 5px;
+  margin-right: 25px;
+  outline: none;
+}
+.colButton {
+  text-align: right;
+  :hover {
+    background: #004481 !important;
+    color: #fff !important;
+  }
+}
+.customLink {
+  font-family: Roboto;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  text-decoration-line: underline;
+  color: #11b6f4;
+  text-align: right;
+  margin-right: 25px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.customLinkLeft {
+  margin-right: 24px;
+}
+.customActive {
+  width: 100px;
+  height: 30px;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+  border-radius: 15px;
+  text-align: center;
+  justify-content: center;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  color: #fff;
+  padding-top: 3px;
+}
+.ant-table-thead > tr > th {
+  background-color: #c8ecfa !important;
+}
+.input_name {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  color: #000000;
+}
+/*Create Opp*/
+.row_title {
+  background: #c8ecfa;
+}
+.title_center {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  color: #000000;
+}
+.title_close {
+  margin-top: 13px !important;
+}
+.title_button {
+  background: #ffef02 !important;
+  width: 140px;
+  height: 30px;
+  border: 1px solid #ffef02;
+  box-sizing: border-box;
+  border-radius: 15px;
+  text-align: center;
+  margin-left: 200px;
+  margin-top: 5px !important;
+}
+.row_required {
+  width: 485px !important;
+}
+.required_language {
+  width: 350px !important;
+}
+.box_required {
+  margin-top: 23px;
+}
+.start_box_required {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.required {
+  position: absolute;
+  width: 153px;
+  height: 35px;
+}
+.footer {
+  text-align: center;
+  background: #c8ecfa;
+  height: 40px;
+  margin-top: 50px;
+}
+.with-divider {
+  border-bottom: $border-base;
+}
+.cursor-pointer {
+  cursor: pointer;
+}

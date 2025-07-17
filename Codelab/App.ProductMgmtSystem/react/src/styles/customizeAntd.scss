@@ -1,0 +1,67 @@
+/**
+ * Customize styles for AntD components
+ */
+
+// Result
+.ant-result {
+  &.app-result-page {
+    height: 100vh;
+    width: 100vw;
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+
+// Checkbox
+.ant-checkbox-inner {
+  border-radius: 0;
+}
+
+// Change input focus/hover color to $color-link
+.ant-input,
+.ant-select-selection,
+.ant-select-selector,
+.ant-input-number,
+.ant-input-affix-wrapper {
+  &:hover,
+  &:focus-within,
+  &:focus {
+    @include link-border-box-shadow;
+  }
+}
+
+.ant-input-affix-wrapper > input.ant-input {
+  box-shadow: none !important;
+}
+
+.ant-select:not(.ant-select-disabled):hover,
+.ant-select:not(.ant-select-disabled):focus-within,
+.ant-select-focused.ant-select-multiple {
+  .ant-select-selector {
+    @include link-border-box-shadow;
+  }
+}
+
+.ant-cascader-picker:focus .ant-cascader-input,
+.ant-cascader-picker-label:hover + .ant-cascader-input {
+  @include link-border-box-shadow;
+}
+
+.ant-picker:hover,
+.ant-picker-focused {
+  @include link-border-box-shadow;
+}
+
+.ant-picker-range .ant-picker-active-bar {
+  background: $color-secondary;
+}
+
+// Pagination
+.ant-pagination-options-size-changer.ant-select {
+  margin-right: 0;
+}
+
+// Menu
+.ant-menu {
+  transition: $transition-base;
+}

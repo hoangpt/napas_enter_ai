@@ -1,0 +1,13 @@
+.app-layout .app-content .app-container .app-container-body {
+  position: relative;
+  .create {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    background-color: #ffffff;
+    width: 98%;
+    height: 100%;
+    z-index: 99;
+    display: block;
+  }
+}
