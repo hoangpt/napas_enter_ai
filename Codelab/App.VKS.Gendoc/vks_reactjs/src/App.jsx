@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import CaseList from './CaseList';
-import CaseUpload from './CaseUpload';
+import CaseList from './pages/CaseList/index';
+import CaseUpload from './pages/CaseUpload';
 
 function App() {
   return (
