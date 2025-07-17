@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototype - Xử Lý Hồ Sơ Vụ Án (Đa màn hình)</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Icons Library -->
+    <script src="https://unpkg.com/lucide-react@0.395.0/dist/umd/lucide.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .screen { display: none; }
+        .screen.active { display: block; }
+        .loader {
+            border-top-color: #3498db;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8 max-w-6xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-blue-700">Hệ Thống Quản Lý Hồ Sơ Vụ Án</h1>
+        </header>
+
+        <!-- Main Content Area -->
+        <main>
+            <!-- Screen 1: Listing Cases -->
+            <div id="listing-screen" class="screen active">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-semibold text-gray-700">Danh sách vụ việc</h2>
+                        <button id="add-new-case-btn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
+                            <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                            Thêm vụ việc mới
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Số thụ lý</th>
+                                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Nguyên đơn</th>
+                                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Bị đơn</th>
+                                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Ngày thụ lý</th>
+                                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Tình trạng</th>
+                                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="case-list-body" class="text-gray-700">
+                                <!-- Case rows will be inserted here by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 2: Upload & Extract -->
+            <div id="upload-screen" class="screen">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                         <button class="back-to-list-btn text-blue-600 hover:text-blue-800 mr-4"><i data-lucide="arrow-left-circle" class="w-8 h-8"></i></button>
+                        <h2 class="text-2xl font-semibold text-gray-700">Thêm Vụ Việc Mới & Bóc Tách Thông Tin</h2>
+                    </div>
+                    
+                    <!-- Upload Component -->
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center mb-4">
+                        <label for="case-file-input" class="cursor-pointer">
+                            <i data-lucide="upload-cloud" class="mx-auto h-12 w-12 text-gray-400"></i>
+                            <span class="mt-2 block text-sm font-medium text-blue-600 hover:text-blue-500">Nhấn để chọn file ảnh</span>
+                            <p class="text-xs text-gray-500">PNG, JPG, JPEG</p>
+                        </label>
+                        <input type="file" id="case-file-input" class="hidden" accept="image/*">
+                    </div>
+                    
+                    <div id="preview-container" class="mt-4 hidden text-center">
+                        <p class="text-sm font-medium text-gray-700 mb-2">Ảnh xem trước:</p>
+                        <img id="image-preview" class="max-w-full max-h-96 mx-auto rounded-md shadow-sm" src="#" alt="Xem trước ảnh hồ sơ">
+                        <div class="text-center mt-4">
+                            <button id="extract-button" class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400">
+                                <i data-lucide="scan-line" class="inline-block w-5 h-5 mr-2"></i>
+                                Bóc tách thông tin
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Extracted Info Form -->
+                    <div id="form-container" class="mt-6 hidden">
+                        <div id="loader" class="flex justify-center items-center py-8 hidden">
+                            <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-24 w-24"></div>
+                            <p class="ml-4 text-gray-600">Đang xử lý, vui lòng chờ...</p>
+                        </div>
+                        <div id="message-box" class="hidden p-4 rounded-md mb-4"></div>
+                        <form id="case-info-form" class="space-y-4">
+                            <!-- Form fields will be the same as before -->
+                             <h3 class="text-lg font-semibold text-gray-800 border-b pb-2">Thông Tin Vụ Án</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="case-number" class="block text-sm font-medium text-gray-600">Số thụ lý</label>
+                                    <input type="text" id="case-number" name="caseNumber" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                </div>
+                                <div>
+                                    <label for="case-date" class="block text-sm font-medium text-gray-600">Ngày thụ lý</label>
+                                    <input type="text" id="case-date" name="caseDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                </div>
+                            </div>
+                             <div>
+                                <label for="case-type" class="block text-sm font-medium text-gray-600">Nội dung khởi kiện</label>
+                                <input type="text" id="case-type" name="caseType" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                            </div>
+
+                            <h3 class="text-lg font-semibold text-gray-800 border-b pb-2 pt-4">Thông Tin Các Bên</h3>
+                            <div class="p-4 border border-gray-200 rounded-lg">
+                                <p class="font-semibold text-blue-700">Nguyên Đơn</p>
+                                <div>
+                                    <label for="plaintiff-name" class="block text-sm font-medium text-gray-600 mt-2">Họ và tên</label>
+                                    <input type="text" id="plaintiff-name" name="plaintiffName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                </div>
+                                <div>
+                                    <label for="plaintiff-address" class="block text-sm font-medium text-gray-600 mt-2">Địa chỉ</label>
+                                    <input type="text" id="plaintiff-address" name="plaintiffAddress" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                </div>
+                            </div>
+                            <div class="p-4 border border-gray-200 rounded-lg">
+                                 <p class="font-semibold text-red-700">Bị Đơn</p>
+                                <div>
+                                    <label for="defendant-name" class="block text-sm font-medium text-gray-600 mt-2">Họ và tên</label>
+                                    <input type="text" id="defendant-name" name="defendantName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                </div>
+                                <div>
+                                    <label for="defendant-address" class="block text-sm font-medium text-gray-600 mt-2">Địa chỉ</label>
+                                    <input type="text" id="defendant-address" name="defendantAddress" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                                </div>
+                            </div>
+                            <div class="text-right pt-4">
+                                <button type="submit" id="save-case-button" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition-colors">
+                                    <i data-lucide="save" class="inline-block w-5 h-5 mr-2"></i>
+                                    Lưu Vụ Việc
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Screen 3: Details & Generate -->
+            <div id="details-screen" class="screen">
+                 <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-6">
+                        <button class="back-to-list-btn text-blue-600 hover:text-blue-800 mr-4"><i data-lucide="arrow-left-circle" class="w-8 h-8"></i></button>
+                        <h2 class="text-2xl font-semibold text-gray-700">Chi Tiết Vụ Việc & Tạo Hồ Sơ</h2>
+                    </div>
+                    <div id="case-details-content" class="space-y-4">
+                        <!-- Details will be populated here -->
+                    </div>
+                    <div class="mt-8 border-t pt-6">
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4">Tạo bộ hồ sơ</h3>
+                        <div class="flex flex-wrap gap-4">
+                            <button class="flex-1 bg-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-700 transition-colors min-w-[200px] flex items-center justify-center gap-2">
+                                <i data-lucide="file-text" class="w-5 h-5"></i>
+                                Gửi Tòa Án Tối Cao
+                            </button>
+                            <button class="flex-1 bg-gray-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors min-w-[200px] flex items-center justify-center gap-2">
+                                <i data-lucide="shield" class="w-5 h-5"></i>
+                                Gửi Công An
+                            </button>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // --- DATA STORE (SIMULATION) ---
+        let cases = [
+            { id: 1, caseNumber: '155/TB-TLVA', plaintiffName: 'Ông Nguyễn Văn A', defendantName: 'Bà Trần Thị B', caseDate: '15/05/2024', status: 'Đang xử lý' },
+            { id: 2, caseNumber: '156/TB-TLVA', plaintiffName: 'Công ty Cổ phần X', defendantName: 'Công ty TNHH Y', caseDate: '20/05/2024', status: 'Đã hoàn tất' },
+        ];
+        let nextCaseId = 3;
+        let imageBase64Data = null;
+
+        // --- DOM ELEMENTS ---
+        const screens = document.querySelectorAll('.screen');
+        const caseListBody = document.getElementById('case-list-body');
+        const addNewCaseBtn = document.getElementById('add-new-case-btn');
+        const backToListBtns = document.querySelectorAll('.back-to-list-btn');
+        
+        // Upload screen elements
+        const fileInput = document.getElementById('case-file-input');
+        const previewContainer = document.getElementById('preview-container');
+        const imagePreview = document.getElementById('image-preview');
+        const extractButton = document.getElementById('extract-button');
+        const formContainer = document.getElementById('form-container');
+        const loader = document.getElementById('loader');
+        const messageBox = document.getElementById('message-box');
+        const caseInfoForm = document.getElementById('case-info-form');
+
+        // Details screen elements
+        const caseDetailsContent = document.getElementById('case-details-content');
+
+        // --- CORE FUNCTIONS ---
+
+        /**
+         * Shows a screen by its ID and hides others.
+         * @param {string} screenId The ID of the screen to show.
+         */
+        const showScreen = (screenId) => {
+            screens.forEach(screen => {
+                screen.classList.toggle('active', screen.id === screenId);
+            });
+            lucide.createIcons(); // Re-render icons when changing screens
+        };
+
+        /**
+         * Renders the list of cases into the table.
+         */
+        const renderCaseList = () => {
+            caseListBody.innerHTML = ''; // Clear existing list
+            if (cases.length === 0) {
+                caseListBody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-gray-500">Chưa có vụ việc nào.</td></tr>`;
+                return;
+            }
+            cases.forEach(c => {
+                const statusClass = c.status === 'Đang xử lý' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800';
+                const row = `
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="py-3 px-4">${c.caseNumber}</td>
+                        <td class="py-3 px-4">${c.plaintiffName}</td>
+                        <td class="py-3 px-4">${c.defendantName}</td>
+                        <td class="py-3 px-4">${c.caseDate}</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-1 font-semibold leading-tight text-xs rounded-full ${statusClass}">
+                                ${c.status}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <button class="view-details-btn text-blue-600 hover:underline" data-id="${c.id}">Xem chi tiết</button>
+                        </td>
+                    </tr>
+                `;
+                caseListBody.insertAdjacentHTML('beforeend', row);
+            });
+        };
+        
+        /**
+         * Renders the details of a specific case.
+         * @param {number} caseId The ID of the case to show.
+         */
+        const renderCaseDetails = (caseId) => {
+            const caseData = cases.find(c => c.id === caseId);
+            if (!caseData) return;
+
+            caseDetailsContent.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-gray-500 text-sm">SỐ THỤ LÝ</h4>
+                        <p class="text-lg">${caseData.caseNumber || 'N/A'}</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-gray-500 text-sm">NGÀY THỤ LÝ</h4>
+                        <p class="text-lg">${caseData.caseDate || 'N/A'}</p>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-semibold text-gray-500 text-sm">NỘI DUNG KHỞI KIỆN</h4>
+                    <p class="text-lg">${caseData.caseType || 'N/A'}</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                    <div class="border border-blue-200 p-4 rounded-lg">
+                        <h4 class="font-bold text-blue-700 mb-2">NGUYÊN ĐƠN</h4>
+                        <p class="font-semibold">${caseData.plaintiffName || 'N/A'}</p>
+                        <p class="text-gray-600 text-sm">${caseData.plaintiffAddress || 'N/A'}</p>
+                    </div>
+                    <div class="border border-red-200 p-4 rounded-lg">
+                        <h4 class="font-bold text-red-700 mb-2">BỊ ĐƠN</h4>
+                        <p class="font-semibold">${caseData.defendantName || 'N/A'}</p>
+                        <p class="text-gray-600 text-sm">${caseData.defendantAddress || 'N/A'}</p>
+                    </div>
+                </div>
+            `;
+            showScreen('details-screen');
+        }
+
+        // --- NAVIGATION ---
+        addNewCaseBtn.addEventListener('click', () => showScreen('upload-screen'));
+        backToListBtns.forEach(btn => btn.addEventListener('click', () => showScreen('listing-screen')));
+        
+        caseListBody.addEventListener('click', (e) => {
+            if (e.target && e.target.classList.contains('view-details-btn')) {
+                const caseId = parseInt(e.target.getAttribute('data-id'));
+                renderCaseDetails(caseId);
+            }
+        });
+
+        // --- UPLOAD & EXTRACT LOGIC ---
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                previewContainer.classList.remove('hidden');
+                formContainer.classList.add('hidden');
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    imageBase64Data = e.target.result.split(',')[1];
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        extractButton.addEventListener('click', async () => {
+            if (!imageBase64Data) {
+                showMessage('Vui lòng chọn một file ảnh trước.', 'error');
+                return;
+            }
+            formContainer.classList.remove('hidden');
+            loader.classList.remove('hidden');
+            caseInfoForm.classList.add('hidden');
+            extractButton.disabled = true;
+            extractButton.innerHTML = '<div class="loader inline-block border-2 border-t-2 w-5 h-5 rounded-full"></div> Đang xử lý...';
+
+            try {
+                const extractedData = await extractInfoFromImage(imageBase64Data);
+                populateForm(extractedData);
+                showMessage('Bóc tách thông tin thành công! Vui lòng kiểm tra và lưu lại.', 'success');
+                caseInfoForm.classList.remove('hidden');
+            } catch (error) {
+                console.error('Error extracting information:', error);
+                showMessage(`Đã xảy ra lỗi: ${error.message}`, 'error');
+            } finally {
+                loader.classList.add('hidden');
+                extractButton.disabled = false;
+                extractButton.innerHTML = '<i data-lucide="scan-line" class="inline-block w-5 h-5 mr-2"></i> Bóc tách thông tin';
+                lucide.createIcons();
+            }
+        });
+        
+        async function extractInfoFromImage(base64ImageData) {
+            const apiKey = ""; // API key is handled by the environment
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            const prompt = `Từ hình ảnh văn bản pháp lý này, hãy bóc tách các thông tin sau và trả về dưới dạng một đối tượng JSON. Chỉ trả về đối tượng JSON, không có bất kỳ văn bản giải thích nào khác. Các trường cần lấy: caseNumber, caseDate (dd/mm/yyyy), caseType, plaintiffName, plaintiffAddress, defendantName, defendantAddress.`;
+            const payload = { contents: [{ parts: [{ text: prompt }, { inlineData: { mimeType: "image/jpeg", data: base64ImageData } }] }] };
+            const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
+            const result = await response.json();
+            if (result.candidates?.[0]?.content?.parts?.[0]?.text) {
+                const rawText = result.candidates[0].content.parts[0].text;
+                const jsonText = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
+                return JSON.parse(jsonText);
+            } else {
+                throw new Error("Không nhận được dữ liệu hợp lệ từ API.");
+            }
+        }
+
+        function populateForm(data) {
+            caseInfoForm.elements.caseNumber.value = data.caseNumber || '';
+            caseInfoForm.elements.caseDate.value = data.caseDate || '';
+            caseInfoForm.elements.caseType.value = data.caseType || '';
+            caseInfoForm.elements.plaintiffName.value = data.plaintiffName || '';
+            caseInfoForm.elements.plaintiffAddress.value = data.plaintiffAddress || '';
+            caseInfoForm.elements.defendantName.value = data.defendantName || '';
+            caseInfoForm.elements.defendantAddress.value = data.defendantAddress || '';
+        }
+
+        function showMessage(text, type) {
+            messageBox.textContent = text;
+            messageBox.className = 'p-4 rounded-md mb-4'; // Reset classes
+            if (type === 'success') {
+                messageBox.classList.add('bg-green-100', 'text-green-800');
+            } else {
+                messageBox.classList.add('bg-red-100', 'text-red-800');
+            }
+        }
+
+        caseInfoForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(caseInfoForm);
+            const newCase = Object.fromEntries(formData.entries());
+            newCase.id = nextCaseId++;
+            newCase.status = 'Đang xử lý';
+            
+            cases.push(newCase);
+            renderCaseList();
+            
+            // Reset form and UI
+            caseInfoForm.reset();
+            previewContainer.classList.add('hidden');
+            formContainer.classList.add('hidden');
+            fileInput.value = '';
+
+            // Go back to list
+            showScreen('listing-screen');
+        });
+
+
+        // --- INITIALIZATION ---
+        window.onload = () => {
+            renderCaseList();
+            showScreen('listing-screen');
+        };
+    </script>
+</body>
+</html>
