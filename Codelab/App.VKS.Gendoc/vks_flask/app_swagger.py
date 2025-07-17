@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_restx import Api, Resource
+from flask_cors import CORS
 from models import db, NguyenDon, BiDon, HoSoThuLy
 from swagger_models import get_swagger_models
 from controllers.nguyen_don_controller import nguyen_don_ns, init_models as init_nguyen_don_models
@@ -9,6 +10,13 @@ import os
 
 def create_app():
     app = Flask(__name__)
+    
+    # Cấu hình CORS cho tất cả các endpoint
+    CORS(app, 
+         origins="*",  # Cho phép tất cả các origin
+         methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],  # Cho phép tất cả HTTP methods
+         allow_headers=["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"]
+    )
     
     # Cấu hình database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///vks_app.db'

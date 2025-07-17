@@ -1,10 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './style.css';
-import fixture from './fixture.js';
+import { useHoSo } from '../../providers/HoSoProvider.jsx';
 
 function CaseList() {
-  const data = fixture;
+  const { hoSoList: data, loading, error } = useHoSo();
+
+  if (loading) {
+    return (
+      <div className="casel-root">
+        <div className="casel-container" style={{ textAlign: 'center', padding: '100px 0' }}>
+          <div style={{ fontSize: 18, color: '#666' }}>Đang tải dữ liệu...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="casel-root">
+        <div className="casel-container" style={{ textAlign: 'center', padding: '100px 0' }}>
+          <div style={{ fontSize: 18, color: '#e74c3c' }}>Lỗi: {error}</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="casel-root">
