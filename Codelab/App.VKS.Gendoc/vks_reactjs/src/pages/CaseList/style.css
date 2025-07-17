@@ -1,0 +1,86 @@
+/* CaseList styles */
+.casel-root {
+  min-height: 100vh;
+  background: #f5f6fa;
+  padding: 32px 0;
+}
+.casel-header {
+  text-align: center;
+  color: #2563eb;
+  font-weight: 700;
+  font-size: 40px;
+  margin-bottom: 32px;
+  letter-spacing: 1px;
+}
+.casel-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 2px 16px #e0e7ef;
+}
+.casel-titlebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.casel-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #222;
+}
+.casel-add-btn {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 32px;
+  cursor: pointer;
+}
+.casel-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 18px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.casel-table th {
+  padding: 16px;
+  text-align: left;
+  color: #222;
+  background: #f5f6fa;
+  font-weight: 700;
+}
+.casel-table td {
+  padding: 16px;
+}
+.casel-table tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+.casel-status-processing {
+  background: #f7f6e7;
+  color: #b59d1b;
+  padding: 4px 16px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 16px;
+}
+.casel-status-done {
+  background: #e6f7ed;
+  color: #1aaf5d;
+  padding: 4px 16px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 16px;
+}
+.casel-link {
+  color: #2563eb;
+  font-weight: 600;
+  font-size: 18px;
+  text-decoration: underline;
+}
