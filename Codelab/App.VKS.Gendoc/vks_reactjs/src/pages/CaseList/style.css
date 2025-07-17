@@ -1,4 +1,5 @@
 /* CaseList styles */
+/* Full width styles */
 .casel-root {
   min-height: 100vh;
   background: #f5f6fa;
@@ -13,12 +14,12 @@
   letter-spacing: 1px;
 }
 .casel-container {
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100vw;
+  margin: 0;
   background: #fff;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 2px 16px #e0e7ef;
+  border-radius: 0;
+  padding: 32px 0;
+  box-shadow: none;
 }
 .casel-titlebar {
   display: flex;
@@ -42,12 +43,12 @@
   cursor: pointer;
 }
 .casel-table {
-  width: 100%;
+  width: 100vw;
   border-collapse: collapse;
   font-size: 18px;
   background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
+  border-radius: 0;
+  overflow: visible;
 }
 .casel-table th {
   padding: 16px;

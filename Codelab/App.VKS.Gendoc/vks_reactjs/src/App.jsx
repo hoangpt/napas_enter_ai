@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import CaseList from './pages/CaseList';
+import CaseList from './pages/CaseList/index';
 import CaseUpload from './pages/CaseUpload';
 
 function App() {

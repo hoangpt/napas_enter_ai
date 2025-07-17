@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './style.css';
+import fixture from './fixture.js';
 
 function CaseList() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetch('./pages/CaseList/fixture.json')
-      .then((res) => res.json())
-      .then(setData);
-  }, []);
+  const data = fixture;
 
   return (
     <div className="casel-root">
