@@ -23,6 +23,24 @@ upload_parser.add_argument('file',
                          type=FileStorage, 
                          required=True, 
                          help='File ảnh tài liệu pháp lý (PNG, JPG, JPEG, GIF, BMP)')
+upload_parser.add_argument('use_fixtures', 
+                         location='form',
+                         type=str, 
+                         default='true',
+                         help='Sử dụng mock data (true) hoặc Azure OpenAI thực tế (false)')
+
+# Parser cho extract-only (không lưu vào DB)
+extract_parser = reqparse.RequestParser()
+extract_parser.add_argument('file', 
+                          location='files',
+                          type=FileStorage, 
+                          required=True, 
+                          help='File ảnh tài liệu pháp lý')
+extract_parser.add_argument('use_fixtures', 
+                          location='form',
+                          type=str, 
+                          default='true',
+                          help='Sử dụng mock data (true) hoặc Azure OpenAI thực tế (false)')
 
 @upload_ns.route('/document')
 class DocumentUpload(Resource):
@@ -37,15 +55,18 @@ class DocumentUpload(Resource):
         
         API này sẽ:
         1. Upload file hình ảnh
-        2. Sử dụng Azure OpenAI Vision để OCR và extract thông tin
+        2. Sử dụng Azure OpenAI Vision để OCR và extract thông tin (hoặc mock data)
         3. Lưu thông tin nguyên đơn, bị đơn, hồ sơ vào database
         
-        File upload: multipart/form-data với key 'file'
+        Tham số:
+        - file: multipart/form-data với key 'file'
+        - use_fixtures: 'true' (mặc định) để dùng mock data, 'false' để gọi Azure OpenAI thực tế
         """
         try:
             # Parse arguments từ request
             args = upload_parser.parse_args()
             file = args['file']
+            use_fixtures = args.get('use_fixtures', 'true').lower() == 'true'
             
             if not file:
                 return {'error': 'Chưa chọn file'}, 400
@@ -64,7 +85,7 @@ class DocumentUpload(Resource):
             file_path = OCRService.save_uploaded_file(file, upload_folder)
             
             # OCR và extract thông tin
-            ocr_result = OCRService.extract_legal_document_info(file_path)
+            ocr_result = OCRService.extract_legal_document_info(file_path, use_fixtures=use_fixtures)
             
             if not ocr_result['success']:
                 return {
@@ -119,7 +140,7 @@ class UploadTest(Resource):
 @upload_ns.route('/extract-only')
 class DocumentExtractOnly(Resource):
     @upload_ns.doc('extract_only')
-    @upload_ns.expect(upload_parser)
+    @upload_ns.expect(extract_parser)
     @upload_ns.response(200, 'Extract thành công')
     @upload_ns.response(400, 'File không hợp lệ')
     @upload_ns.response(500, 'Lỗi server')
@@ -127,11 +148,16 @@ class DocumentExtractOnly(Resource):
         """
         Chỉ extract thông tin từ hình ảnh, không lưu vào database
         Dùng để test OCR trước khi lưu dữ liệu
+        
+        Tham số:
+        - file: File ảnh tài liệu pháp lý
+        - use_fixtures: 'true' (mặc định) để dùng mock data, 'false' để gọi Azure OpenAI thực tế
         """
         try:
             # Parse arguments từ request
-            args = upload_parser.parse_args()
+            args = extract_parser.parse_args()
             file = args['file']
+            use_fixtures = args.get('use_fixtures', 'true').lower() == 'true'
             
             if not file:
                 return {'error': 'Chưa chọn file'}, 400
@@ -146,7 +172,7 @@ class DocumentExtractOnly(Resource):
             file_path = OCRService.save_uploaded_file(file, upload_folder)
             
             # OCR
-            ocr_result = OCRService.extract_legal_document_info(file_path)
+            ocr_result = OCRService.extract_legal_document_info(file_path, use_fixtures=use_fixtures)
             
             # Cleanup
             try:

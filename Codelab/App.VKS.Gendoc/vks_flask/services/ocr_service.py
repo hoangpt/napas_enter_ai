@@ -5,41 +5,30 @@ import requests
 from PIL import Image
 import io
 from flask import current_app
+from fixtures import MOCK_LEGAL_DOCUMENT_DATA
 
 class OCRService:
     
     @staticmethod
-    def extract_legal_document_info(image_path):
+    def extract_legal_document_info(image_path, use_fixtures=True):
         """
         Sử dụng Azure OpenAI Vision để OCR và extract thông tin từ văn bản pháp lý
+        
+        Args:
+            image_path: Đường dẫn đến file ảnh
+            use_fixtures: True = sử dụng mock data, False = gọi Azure OpenAI thực tế
         """
         try:
-            # MOCK DATA - Trả về dữ liệu mẫu dựa trên ảnh tài liệu thực tế
-            mock_data = {
-                "nguyen_don": {
-                    "ten": "Chị Nguyễn Phương Thảo",
-                    "dia_chi": "Tổ Dân Phố Ngọc 2, phường Trung Minh, TP.Hòa Bình, tỉnh Hòa Bình"
-                },
-                "bi_don": {
-                    "ten": "Anh Đỗ Minh Tuấn",
-                    "dia_chi": "Tổ 13, phường Hữu Nghị, TP Hòa Bình, tỉnh Hòa Bình"
-                },
-                "ho_so": {
-                    "ma": "209/TB-TLVA",
-                    "dia_diem": "Tòa án nhân dân thành phố Hòa Bình",
-                    "ngay_gio": "2025-06-24T14:30:00",
-                    "noi_dung_vu_viec": "Thông báo về việc thụ lý vụ án - Viện Kiểm sát nhân dân Thành phố Hòa Bình thụ lý vụ án HNGD số: 209/2025/TLST- HNGD về việc: Xin ly hôn theo đơn khởi kiện của Chị Nguyễn Phương Thảo"
+            # Kiểm tra flag để quyết định sử dụng mock data hay Azure OpenAI
+            if use_fixtures:
+                # MOCK DATA - Sử dụng dữ liệu từ fixtures
+                return {
+                    'success': True,
+                    'data': MOCK_LEGAL_DOCUMENT_DATA,
+                    'raw_response': f"MOCK DATA: Extracted from legal document image - {os.path.basename(image_path)}"
                 }
-            }
             
-            return {
-                'success': True,
-                'data': mock_data,
-                'raw_response': f"MOCK DATA: Extracted from legal document image - {os.path.basename(image_path)}"
-            }
-            
-            # Code Azure OpenAI thực tế - sẽ enable khi config đúng
-            """
+            # Code Azure OpenAI thực tế
             # Lấy config từ app
             api_key = current_app.config.get('AZURE_OPENAI_API_KEY')
             endpoint = current_app.config.get('AZURE_OPENAI_ENDPOINT')
@@ -57,7 +46,7 @@ class OCRService:
                 base64_image = base64.b64encode(image_file.read()).decode('utf-8')
             
             # Prompt để extract thông tin
-            prompt = \"\"\"
+            prompt = """
             Bạn là một chuyên gia phân tích văn bản pháp lý Việt Nam. Hãy phân tích hình ảnh này và trích xuất thông tin theo định dạng JSON sau:
 
             {
@@ -82,7 +71,7 @@ class OCRService:
             - Ngày giờ theo format ISO 8601
             - Nếu không tìm thấy thông tin nào, để giá trị null
             - Đọc kỹ toàn bộ văn bản để extract chính xác
-            \"\"\"
+            """
             
             # Gọi Azure OpenAI Vision API bằng REST API
             url = f"{endpoint}/openai/deployments/{deployment_name}/chat/completions?api-version={api_version}"
@@ -133,13 +122,12 @@ class OCRService:
                 'data': parsed_data,
                 'raw_response': result_text
             }
-            """
             
         except json.JSONDecodeError as e:
             return {
                 'success': False,
                 'error': f'Lỗi parse JSON: {str(e)}',
-                'raw_response': result_text if 'result_text' in locals() else None
+                'raw_response': None
             }
         except Exception as e:
             return {
