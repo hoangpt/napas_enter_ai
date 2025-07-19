@@ -67,7 +67,7 @@ function CaseList() {
                     </span>
                   </td>
                   <td>
-                    <Link to="#" className="casel-link">Xem chi tiết</Link>
+                    <Link to={`/case/${row.id || idx}`} className="casel-link">Xem chi tiết</Link>
                   </td>
                 </tr>
               ))

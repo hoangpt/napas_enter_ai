@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import CaseList from './pages/CaseList/index';
 import CaseUpload from './pages/CaseUpload';
+import CaseDetail from './pages/CaseDetail/index';
 import { HoSoProvider } from './providers/HoSoProvider.jsx';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<CaseList />} />
           <Route path="/upload" element={<CaseUpload />} />
+          <Route path="/case/:id" element={<CaseDetail />} />
         </Routes>
       </Router>
     </HoSoProvider>
