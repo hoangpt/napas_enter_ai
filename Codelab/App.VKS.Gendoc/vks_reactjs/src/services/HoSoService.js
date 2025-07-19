@@ -1,7 +1,7 @@
 import HoSo from '../models/HoSo';
 
 class HoSoService {
-  static BASE_URL = 'http://localhost:5000/api';
+  static BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   static async getHoSoList() {
     try {

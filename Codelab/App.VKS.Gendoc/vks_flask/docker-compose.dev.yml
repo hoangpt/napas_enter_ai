@@ -1,0 +1,29 @@
+# VKS Flask API - Docker Compose for Development
+version: '3.8'
+
+services:
+  vks-flask-api-dev:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: vks-flask-api-dev
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+      - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY}
+      - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT}
+      - AZURE_OPENAI_API_VERSION=${AZURE_OPENAI_API_VERSION}
+      - AZURE_OPENAI_DEPLOYMENT_NAME=${AZURE_OPENAI_DEPLOYMENT_NAME}
+    volumes:
+      # Mount entire source code for development
+      - .:/app
+      # Mount instance directory (for SQLite database)
+      - ./data/instance:/app/instance
+      # Mount uploads directory (for uploaded files)
+      - ./data/uploads:/app/uploads
+    restart: unless-stopped
+    command: ["python", "app_swagger.py"]
+    stdin_open: true
+    tty: true

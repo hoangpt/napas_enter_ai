@@ -1,3 +1,9 @@
+import os
+from dotenv import load_dotenv
+
+# Load environment variables FIRST
+load_dotenv()
+
 from flask import Flask
 from flask_restx import Api, Resource
 from flask_cors import CORS
@@ -6,10 +12,14 @@ from swagger_models import get_swagger_models
 from controllers.nguyen_don_controller import nguyen_don_ns, init_models as init_nguyen_don_models
 from controllers.bi_don_controller import bi_don_ns, init_models as init_bi_don_models
 from controllers.ho_so_thu_ly_controller import ho_so_ns, init_models as init_ho_so_models
-import os
+from controllers.upload_controller import upload_ns, init_models as init_upload_models
+from config import Config
 
 def create_app():
     app = Flask(__name__)
+    
+    # Load configuration
+    app.config.from_object(Config)
     
     # Cấu hình CORS cho tất cả các endpoint
     CORS(app, 
@@ -51,11 +61,13 @@ def create_app():
     init_nguyen_don_models(swagger_models)
     init_bi_don_models(swagger_models)
     init_ho_so_models(swagger_models)
+    init_upload_models(swagger_models)
     
     # Đăng ký namespaces
     api.add_namespace(nguyen_don_ns, path='/nguyen-don')
     api.add_namespace(bi_don_ns, path='/bi-don')
     api.add_namespace(ho_so_ns, path='/ho-so')
+    api.add_namespace(upload_ns, path='/upload')
     
     # Namespace cho thống kê
     stats_ns = api.namespace('statistics', description='API thống kê tổng quan')

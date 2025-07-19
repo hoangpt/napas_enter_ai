@@ -72,6 +72,29 @@ def get_swagger_models(api):
         'message': fields.String(description='Thông báo thành công', example='Xóa thành công')
     })
     
+    # Models cho Upload API
+    upload_response_model = api.model('UploadResponse', {
+        'success': fields.Boolean(description='Trạng thái xử lý', example=True),
+        'message': fields.String(description='Thông báo', example='Upload và xử lý thành công'),
+        'extracted_data': fields.Raw(description='Dữ liệu được extract từ OCR'),
+        'existing_records': fields.Raw(description='Các bản ghi đã tồn tại trong hệ thống'),
+        'processing_result': fields.Raw(description='Kết quả xử lý và lưu dữ liệu'),
+        'ocr_raw_response': fields.String(description='Raw response từ Azure OpenAI')
+    })
+    
+    extract_only_response_model = api.model('ExtractOnlyResponse', {
+        'success': fields.Boolean(description='Trạng thái extract', example=True),
+        'extracted_data': fields.Raw(description='Dữ liệu được extract từ OCR'),
+        'raw_response': fields.String(description='Raw response từ Azure OpenAI')
+    })
+    
+    upload_test_response_model = api.model('UploadTestResponse', {
+        'message': fields.String(description='Trạng thái API', example='Upload API đang hoạt động'),
+        'azure_configured': fields.Boolean(description='Azure OpenAI đã cấu hình', example=True),
+        'upload_folder': fields.String(description='Thư mục upload', example='uploads'),
+        'max_file_size': fields.String(description='Kích thước file tối đa', example='16MB')
+    })
+    
     return {
         'nguyen_don_model': nguyen_don_model,
         'nguyen_don_input': nguyen_don_input,
@@ -81,5 +104,8 @@ def get_swagger_models(api):
         'ho_so_input': ho_so_input,
         'statistics_model': statistics_model,
         'error_model': error_model,
-        'success_model': success_model
+        'success_model': success_model,
+        'upload_response_model': upload_response_model,
+        'extract_only_response_model': extract_only_response_model,
+        'upload_test_response_model': upload_test_response_model
     }

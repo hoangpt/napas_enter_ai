@@ -10,7 +10,10 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "docker:build": "docker build -t vks-reactjs .",
+    "docker:run": "docker run -p 3000:3000 vks-reactjs",
+    "docker:compose": "docker-compose up --build"
   },
   "dependencies": {
     "bootstrap": "^5.3.7",
