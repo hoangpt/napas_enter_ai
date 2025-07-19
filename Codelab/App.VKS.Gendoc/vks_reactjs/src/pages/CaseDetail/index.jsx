@@ -6,6 +6,7 @@ import './style.css';
 function CaseDetail() {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState('info');
+  const [showImageModal, setShowImageModal] = useState(false);
 
   // Handle action buttons
   const handleEdit = () => {
@@ -24,6 +25,15 @@ function CaseDetail() {
     setTimeout(() => {
       alert('Hồ sơ đã được gửi đến máy in');
     }, 1000);
+  };
+
+  // Handle image modal
+  const openImageModal = () => {
+    setShowImageModal(true);
+  };
+
+  const closeImageModal = () => {
+    setShowImageModal(false);
   };
 
   // Tìm hồ sơ theo ID từ fixture
@@ -150,7 +160,7 @@ function CaseDetail() {
                   </div>
                 </div>
 
-                {/* Cột phải - Ảnh hồ sơ gốc và Hành động */}
+                {/* Cột phải - Hành động và Ảnh hồ sơ gốc */}
                 <div className="case-detail-right">
                   {/* Actions Section */}
                   <div className="case-detail-section case-detail-actions-section">
@@ -171,13 +181,20 @@ function CaseDetail() {
                     </div>
                   </div>
 
+                  {/* Document Preview Section */}
                   <div className="case-detail-section">
                     <h3 className="case-detail-section-title">Ảnh hồ sơ gốc</h3>
                     <div className="case-detail-document-preview">
-                      <div className="document-placeholder">
-                        <div className="document-icon">📄</div>
-                        <div className="document-title">Hồ Sơ Gốc 1</div>
-                        <div className="document-subtitle">Click để xem chi tiết</div>
+                      <div className="document-image-thumbnail" onClick={openImageModal}>
+                        <img 
+                          src="/tesst.jpg" 
+                          alt="Ảnh hồ sơ gốc" 
+                          className="document-real-image"
+                        />
+                        <div className="image-overlay">
+                          <div className="zoom-icon">🔍</div>
+                          <div className="zoom-text">Click để phóng to</div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -210,6 +227,20 @@ function CaseDetail() {
           </div>
         </div>
       </div>
+
+      {/* Image Modal */}
+      {showImageModal && (
+        <div className="image-modal-overlay" onClick={closeImageModal}>
+          <div className="image-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={closeImageModal}>×</button>
+            <img 
+              src="/tesst.jpg" 
+              alt="Ảnh hồ sơ gốc - Phóng to" 
+              className="document-modal-image"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
