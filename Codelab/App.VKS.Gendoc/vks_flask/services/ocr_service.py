@@ -35,6 +35,7 @@ class OCRService:
             api_version = current_app.config.get('AZURE_OPENAI_API_VERSION', '2024-02-15-preview')
             deployment_name = current_app.config.get('AZURE_OPENAI_DEPLOYMENT_NAME', 'gpt-4-vision-preview')
             
+            # Defense code
             if not api_key or not endpoint:
                 return {
                     'success': False,

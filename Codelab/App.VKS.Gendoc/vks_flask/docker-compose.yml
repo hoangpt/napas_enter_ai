@@ -1,0 +1,34 @@
+# VKS Flask API - Docker Compose
+version: '3.8'
+
+services:
+  vks-flask-api:
+    build: .
+    container_name: vks-flask-api
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY}
+      - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT}
+      - AZURE_OPENAI_API_VERSION=${AZURE_OPENAI_API_VERSION}
+      - AZURE_OPENAI_DEPLOYMENT_NAME=${AZURE_OPENAI_DEPLOYMENT_NAME}
+    volumes:
+      # Mount instance directory (for SQLite database)
+      - ./data/instance:/app/instance
+      # Mount uploads directory (for uploaded files)
+      - ./data/uploads:/app/uploads
+      # Mount .env file for configuration
+      - ./.env:/app/.env:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  # Optional: Define named volumes if needed
+  vks_instance_data:
+  vks_uploads_data:
