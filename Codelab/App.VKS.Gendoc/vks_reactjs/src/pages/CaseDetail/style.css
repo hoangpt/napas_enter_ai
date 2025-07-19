@@ -551,7 +551,6 @@ body:has(.case-detail-root) {
 
 /* Independent Actions Section */
 .case-detail-actions-section {
-  margin-bottom: 24px;
   background: white;
   border-radius: 12px;
   padding: 24px;
