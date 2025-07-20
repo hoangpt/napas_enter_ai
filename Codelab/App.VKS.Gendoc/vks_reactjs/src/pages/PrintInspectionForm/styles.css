@@ -1,0 +1,106 @@
+.print-form-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  background: #fff;
+  min-height: calc(100vh - 64px);
+}
+
+.print-form-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.print-form-header h1 {
+  font-size: 24px;
+  color: #1F3B84;
+  margin-top: 16px;
+}
+
+.print-form-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.print-form-content h2 {
+  font-size: 28px;
+  color: #262626;
+  margin-bottom: 16px;
+}
+
+.success-message {
+  color: #52c41a;
+  font-size: 16px;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.instruction {
+  font-size: 16px;
+  color: #595959;
+  margin-bottom: 32px;
+}
+
+.decision-info {
+  background: #f6ffed;
+  border: 1px solid #b7eb8f;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 24px 0;
+  text-align: left;
+}
+
+.decision-info h3 {
+  color: #52c41a;
+  font-size: 18px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.info-item {
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #262626;
+}
+
+.info-item strong {
+  color: #1890ff;
+  margin-right: 8px;
+}
+
+.action-buttons {
+  margin: 40px 0;
+}
+
+.secondary-actions {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.print-button {
+  background: #00B3B3 !important;
+  border-color: #00B3B3 !important;
+  height: 48px;
+  padding: 0 32px;
+  font-size: 16px;
+}
+
+.print-button:hover {
+  background: #008F8F !important;
+  border-color: #008F8F !important;
+}
+
+.complete-button {
+  background: #00A854 !important;
+  border-color: #00A854 !important;
+  margin-top: 24px;
+  height: 40px;
+  padding: 0 32px;
+}
+
+.complete-button:hover {
+  background: #008D48 !important;
+  border-color: #008D48 !important;
+}
