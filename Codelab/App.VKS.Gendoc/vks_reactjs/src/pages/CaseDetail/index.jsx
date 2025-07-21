@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import fixture from '../CaseList/fixture.js';
 import './style.css';
+import PrintRecordScreen from '../PrintRecordScreen'; // import màn hình in hồ sơ
 
 function CaseDetail() {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState('info');
+  const [showPrintScreen, setShowPrintScreen] = useState(false); // state hiển thị màn hình in
 
   // Handle action buttons
   const handleEdit = () => {
@@ -19,11 +21,7 @@ function CaseDetail() {
   };
 
   const handlePrint = () => {
-    alert('Đang chuẩn bị in hồ sơ...');
-    // Simulate printing process
-    setTimeout(() => {
-      alert('Hồ sơ đã được gửi đến máy in');
-    }, 1000);
+    setShowPrintScreen(true); // Hiển thị màn hình in hồ sơ
   };
 
   // Tìm hồ sơ theo ID từ fixture
@@ -36,6 +34,18 @@ function CaseDetail() {
           <div style={{ fontSize: 18, color: '#666' }}>Không tìm thấy hồ sơ</div>
           <Link to="/" style={{ marginTop: 16, display: 'inline-block' }}>← Quay lại danh sách</Link>
         </div>
+      </div>
+    );
+  }
+
+  // Nếu đang ở màn hình in hồ sơ thì chỉ render PrintRecordScreen
+  if (showPrintScreen) {
+    return (
+      <div className="case-detail-root">
+        <PrintRecordScreen
+          hoSo={hoSo}
+          onClose={() => setShowPrintScreen(false)}
+        />
       </div>
     );
   }

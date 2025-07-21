@@ -498,3 +498,61 @@ body:has(.case-detail-root) {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transform: translateY(-1px);
 }
+
+/* Document Type Selection Styles */
+.document-type-selection {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.document-type-btn {
+  background: #ffffff;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  min-width: 180px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.document-type-btn:hover {
+  border-color: #4472c4;
+  background: #f8f9fa;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.document-type-btn.active {
+  background: #4472c4;
+  color: white;
+  border-color: #4472c4;
+  box-shadow: 0 4px 12px rgba(68, 114, 196, 0.3);
+}
+
+.document-type-btn.active:hover {
+  background: #3a5fac;
+  border-color: #3a5fac;
+}
+
+/* Responsive Design for Document Type Selection */
+@media (max-width: 768px) {
+  .document-type-selection {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .document-type-btn {
+    min-width: 100%;
+    max-width: 300px;
+  }
+}
