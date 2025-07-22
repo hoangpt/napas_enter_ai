@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import fixture from '../CaseList/fixture.js';
 import './style.css';
 
 function CaseDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('info');
   const [showImageModal, setShowImageModal] = useState(false);
 
@@ -14,9 +15,7 @@ function CaseDetail() {
   };
 
   const handleResolve = () => {
-    if (confirm('Bạn có chắc chắn muốn đánh dấu vụ việc này là đã giải quyết?')) {
-      alert('Vụ việc đã được đánh dấu là đã giải quyết');
-    }
+    navigate(`/case/${id}/update-decision`);
   };
 
   const handlePrint = () => {
@@ -53,7 +52,14 @@ function CaseDetail() {
   return (
     <div className="case-detail-root">
       <div className="case-detail-header">
-        <h1 className="case-detail-title">Hệ Thống Quản Lý Hồ Sơ Vụ Án</h1>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+          <img 
+            src="https://upload.wikimedia.org/wikipedia/vi/thumb/b/ba/Ph%C3%B9_hi%E1%BB%87u_Vi%E1%BB%87n_ki%E1%BB%83m_s%C3%A1t_nh%C3%A2n_d%C3%A2n.svg/1004px-Ph%C3%B9_hi%E1%BB%87u_Vi%E1%BB%87n_ki%E1%BB%83m_s%C3%A1t_nh%C3%A2n_d%C3%A2n.svg.png"
+            alt="Logo VKSND"
+            style={{ height: '60px', marginRight: '16px' }}
+          />
+          <h1 className="case-detail-title">Hệ Thống Quản Lý Hồ Sơ Vụ Án</h1>
+        </div>
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
           <Link to="/" style={{ color: 'white', textDecoration: 'none', fontSize: '14px' }}>
             ← Quay lại danh sách vụ việc
