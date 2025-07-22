@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import fixture from '../CaseList/fixture.js';
 import './style.css';
+import PrintRecordScreen from '../PrintRecordScreen'; // import màn hình in hồ sơ
 
 function CaseDetail() {
   const { id } = useParams();
@@ -45,6 +46,18 @@ function CaseDetail() {
           <div style={{ fontSize: 18, color: '#666' }}>Không tìm thấy hồ sơ</div>
           <Link to="/" style={{ marginTop: 16, display: 'inline-block' }}>← Quay lại danh sách</Link>
         </div>
+      </div>
+    );
+  }
+
+  // Nếu đang ở màn hình in hồ sơ thì chỉ render PrintRecordScreen
+  if (showPrintScreen) {
+    return (
+      <div className="case-detail-root">
+        <PrintRecordScreen
+          hoSo={hoSo}
+          onClose={() => setShowPrintScreen(false)}
+        />
       </div>
     );
   }
