@@ -1,6 +1,6 @@
 from flask import request
 from flask_restx import Resource, Namespace
-from services.bi_don_service import BiDonService
+from hosothuly.services.bi_don_service import BiDonService
 
 # Tạo namespace cho Swagger
 bi_don_ns = Namespace('bi-don', description='API quản lý bị đơn (người bị kiện)')

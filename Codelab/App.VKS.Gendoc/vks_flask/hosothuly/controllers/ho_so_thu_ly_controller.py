@@ -1,6 +1,6 @@
 from flask import request
 from flask_restx import Resource, Namespace
-from services.ho_so_thu_ly_service import HoSoThuLyService
+from hosothuly.services.ho_so_thu_ly_service import HoSoThuLyService
 from datetime import datetime
 
 # Tạo namespace cho Swagger

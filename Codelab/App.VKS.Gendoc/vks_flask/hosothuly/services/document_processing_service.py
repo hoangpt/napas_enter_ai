@@ -1,6 +1,6 @@
-from services.nguyen_don_service import NguyenDonService
-from services.bi_don_service import BiDonService
-from services.ho_so_thu_ly_service import HoSoThuLyService
+from hosothuly.services.nguyen_don_service import NguyenDonService
+from hosothuly.services.bi_don_service import BiDonService
+from hosothuly.services.ho_so_thu_ly_service import HoSoThuLyService
 from datetime import datetime
 import json
 

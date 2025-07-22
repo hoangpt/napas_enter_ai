@@ -159,7 +159,7 @@ def test_swagger_api():
     print("Tại đây bạn có thể:")
     print("- Xem tất cả API endpoints")
     print("- Test trực tiếp từ web interface")
-    print("- Xem request/response models")
+    print("- Xem request/response repos")
     print("- Download OpenAPI specification")
 
 if __name__ == "__main__":

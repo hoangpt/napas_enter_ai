@@ -11,7 +11,7 @@ def test_upload_with_fixtures():
     print("=== Test Upload với Mock Data ===")
     
     # Kiểm tra file test có tồn tại không
-    test_file = "test_doc.jpg"
+    test_file = "../test_doc.jpg"
     if not os.path.exists(test_file):
         test_file = "samples/tesst.jpg"  # Thử file khác
     
@@ -31,7 +31,7 @@ def test_extract_with_fixtures():
     """Test extract-only với use_fixtures=true"""
     print("\n=== Test Extract-Only với Mock Data ===")
     
-    test_file = "test_doc.jpg"
+    test_file = "../test_doc.jpg"
     if not os.path.exists(test_file):
         test_file = "samples/tesst.jpg"
     
@@ -51,7 +51,7 @@ def test_extract_with_azure_openai():
     """Test extract-only với use_fixtures=false (Azure OpenAI)"""
     print("\n=== Test Extract-Only với Azure OpenAI ===")
     
-    test_file = "test_doc.jpg"
+    test_file = "../test_doc.jpg"
     if not os.path.exists(test_file):
         test_file = "samples/tesst.jpg"
     

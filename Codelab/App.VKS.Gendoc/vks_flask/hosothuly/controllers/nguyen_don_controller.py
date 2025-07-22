@@ -1,6 +1,6 @@
 from flask import request
 from flask_restx import Resource, Namespace
-from services.nguyen_don_service import NguyenDonService
+from hosothuly.services.nguyen_don_service import NguyenDonService
 
 # Tạo namespace cho Swagger
 nguyen_don_ns = Namespace('nguyen-don', description='API quản lý nguyên đơn (người khởi kiện)')

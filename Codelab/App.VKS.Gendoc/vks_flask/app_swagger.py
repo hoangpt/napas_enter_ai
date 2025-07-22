@@ -7,12 +7,12 @@ load_dotenv()
 from flask import Flask
 from flask_restx import Api, Resource
 from flask_cors import CORS
-from models import db, NguyenDon, BiDon, HoSoThuLy
+from hosothuly.repos import db, NguyenDon, BiDon, HoSoThuLy
 from swagger_models import get_swagger_models
-from controllers.nguyen_don_controller import nguyen_don_ns, init_models as init_nguyen_don_models
-from controllers.bi_don_controller import bi_don_ns, init_models as init_bi_don_models
-from controllers.ho_so_thu_ly_controller import ho_so_ns, init_models as init_ho_so_models
-from controllers.upload_controller import upload_ns, init_models as init_upload_models
+from hosothuly.controllers.nguyen_don_controller import nguyen_don_ns, init_models as init_nguyen_don_models
+from hosothuly.controllers.bi_don_controller import bi_don_ns, init_models as init_bi_don_models
+from hosothuly.controllers.ho_so_thu_ly_controller import ho_so_ns, init_models as init_ho_so_models
+from hosothuly.controllers.upload_controller import upload_ns, init_models as init_upload_models
 from config import Config
 
 def create_app():
@@ -54,10 +54,10 @@ def create_app():
         prefix='/api'
     )
     
-    # Tạo và đăng ký Swagger models
+    # Tạo và đăng ký Swagger repos
     swagger_models = get_swagger_models(api)
     
-    # Inject models vào controllers
+    # Inject repos vào controllers
     init_nguyen_don_models(swagger_models)
     init_bi_don_models(swagger_models)
     init_ho_so_models(swagger_models)

@@ -1,4 +1,4 @@
-from models import BiDon, db
+from hosothuly.repos import BiDon, db
 from datetime import datetime
 
 class BiDonService:

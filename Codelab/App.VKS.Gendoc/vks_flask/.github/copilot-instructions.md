@@ -23,7 +23,7 @@ Always start the application with `python app_swagger.py` for complete API docum
 
 ### Model Pattern
 ```python
-# All models follow this pattern:
+# All repos follow this pattern:
 class Entity(db.Model):
     # Standard fields with timestamps
     created_at = db.Column(db.DateTime, default=datetime.utcnow)

@@ -1,4 +1,4 @@
-from models import NguyenDon, db
+from hosothuly.repos import NguyenDon, db
 from datetime import datetime
 
 class NguyenDonService:

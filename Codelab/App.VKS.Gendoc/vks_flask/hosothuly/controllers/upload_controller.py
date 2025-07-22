@@ -3,8 +3,8 @@ from flask import request, current_app
 from flask_restx import Resource, Namespace, reqparse
 from werkzeug.datastructures import FileStorage
 from werkzeug.utils import secure_filename
-from services.ocr_service import OCRService
-from services.document_processing_service import DocumentProcessingService
+from hosothuly.services.ocr_service import OCRService
+from hosothuly.services.document_processing_service import DocumentProcessingService
 
 # Tạo namespace cho Swagger
 upload_ns = Namespace('upload', description='API upload và xử lý tài liệu pháp lý')
