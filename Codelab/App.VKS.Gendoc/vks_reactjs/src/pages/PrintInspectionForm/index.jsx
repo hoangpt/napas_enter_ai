@@ -42,15 +42,7 @@ const PrintInspectionForm = () => {
 
   return (
     <div className="print-form-container">
-      <div className="print-form-header">
-        <img 
-          src="https://upload.wikimedia.org/wikipedia/vi/thumb/b/ba/Ph%C3%B9_hi%E1%BB%87u_Vi%E1%BB%87n_ki%E1%BB%83m_s%C3%A1t_nh%C3%A2n_d%C3%A2n.svg/1004px-Ph%C3%B9_hi%E1%BB%87u_Vi%E1%BB%87n_ki%E1%BB%83m_s%C3%A1t_nh%C3%A2n_d%C3%A2n.svg.png" 
-          alt="Logo VKSND" 
-          className="logo" 
-          style={{ height: '60px' }}
-        />
-        <h1>Hệ thống Quản lý Vụ việc - Viện Kiểm sát Nhân dân khu vực 12 - tỉnh Phú Thọ</h1>
-      </div>
+      <div className="print-form-content" style={{ marginTop: '20px' }}>
 
       <div className="print-form-content">
         <h2>In Phiếu kiểm sát Quyết định/Bản án</h2>
@@ -106,6 +98,7 @@ const PrintInspectionForm = () => {
             Hoàn tất và về trang chính
           </Button>
         </div>
+      </div>
       </div>
     </div>
   );
