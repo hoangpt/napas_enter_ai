@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './CaseDetail/style.css';
 
 function CaseUpload() {
+  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [extractedData, setExtractedData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isExtracted, setIsExtracted] = useState(false); // Track if extraction is completed
 
   const handleFileChange = (e) => {
     const f = e.target.files[0];
@@ -20,6 +24,7 @@ function CaseUpload() {
     // Reset extracted data when file changes
     setExtractedData(null);
     setError(null);
+    setIsExtracted(false); // Reset extraction status
   };
 
   const handleExtractInfo = async () => {
@@ -47,6 +52,7 @@ function CaseUpload() {
 
       const result = await response.json();
       setExtractedData(result.extracted_data);
+      setIsExtracted(true); // Mark extraction as completed
     } catch (err) {
       console.error('Error extracting data:', err);
       setError(err.message || 'Có lỗi xảy ra khi bóc tách thông tin');
@@ -55,12 +61,36 @@ function CaseUpload() {
     }
   };
 
+  const handleContinue = () => {
+    // Navigate to document preview with ID = 1
+    navigate('/document-preview/1');
+  };
+
   return (
-    <div style={{ minHeight: '100vh', background: '#f5f6fa', padding: '32px 0' }}>
-      <div style={{ width: '100vw', margin: 0, background: '#fff', borderRadius: 0, padding: '40px 0', boxShadow: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h1 style={{ color: '#2563eb', fontWeight: 700, fontSize: 32, textAlign: 'center', marginBottom: 32, letterSpacing: 1, width: '100vw' }}>
-          Thêm Vụ Việc Mới & Bóc Tách Thông Tin
-        </h1>
+    <div className="case-detail-root">
+      {/* Header */}
+      <div className="case-detail-header">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+          <img 
+            src="https://upload.wikimedia.org/wikipedia/vi/thumb/b/ba/Ph%C3%B9_hi%E1%BB%87u_Vi%E1%BB%87n_ki%E1%BB%83m_s%C3%A1t_nh%C3%A2n_d%C3%A2n.svg/1004px-Ph%C3%B9_hi%E1%BB%87u_Vi%E1%BB%87n_ki%E1%BB%83m_s%C3%A1t_nh%C3%A2n_d%C3%A2n.svg.png"
+            alt="Logo VKSND"
+            style={{ height: '60px', marginRight: '16px' }}
+          />
+          <h1 className="case-detail-title">Hệ Thống Quản Lý Hồ Sơ Vụ Án</h1>
+        </div>
+        <div style={{ textAlign: 'center', marginTop: '10px' }}>
+          <Link to="/" style={{ color: 'white', textDecoration: 'none', fontSize: '14px' }}>
+            ← Quay lại danh sách vụ việc
+          </Link>
+        </div>
+      </div>
+
+      <div className="case-detail-container">
+        <div className="case-detail-content">
+          <div style={{ padding: '40px 0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <h2 style={{ color: '#2563eb', fontWeight: 700, fontSize: 32, textAlign: 'center', marginBottom: 32, letterSpacing: 1 }}>
+              Thêm Vụ Việc Mới & Bóc Tách Thông Tin
+            </h2>
         <label htmlFor="file-upload" style={{ display: 'block', border: '2px dashed #b3b3b3', borderRadius: 12, padding: 36, textAlign: 'center', cursor: 'pointer', marginBottom: 32, background: '#fafbfc', fontSize: 20, color: '#2563eb', fontWeight: 600, width: '60vw', maxWidth: 800 }}>
           Nhấn để chọn file ảnh
           <div style={{ color: '#888', fontSize: 15, fontWeight: 400, marginTop: 8 }}>PNG, JPG, JPEG</div>
@@ -134,27 +164,49 @@ function CaseUpload() {
             {error}
           </div>
         )}
-        <button 
-          onClick={handleExtractInfo}
-          disabled={loading || !file}
-          style={{ 
-            background: loading || !file ? '#9ca3af' : '#2563eb', 
-            color: '#fff', 
-            border: 'none', 
-            borderRadius: 10, 
-            padding: '16px 0', 
-            fontWeight: 700, 
-            fontSize: 22, 
-            marginTop: 16, 
-            width: '60vw', 
-            maxWidth: 800, 
-            boxShadow: '0 2px 8px #e0e7ef', 
-            letterSpacing: 1,
-            cursor: loading || !file ? 'not-allowed' : 'pointer'
-          }}
-        >
-          {loading ? 'Đang bóc tách...' : 'Bóc tách thông tin'}
-        </button>
+        <div style={{ display: 'flex', gap: '16px', marginTop: 16, justifyContent: 'center' }}>
+          <button 
+            onClick={handleExtractInfo}
+            disabled={loading || !file}
+            style={{ 
+              background: loading || !file ? '#9ca3af' : '#2563eb', 
+              color: '#fff', 
+              border: 'none', 
+              borderRadius: 10, 
+              padding: '16px 32px', 
+              fontWeight: 700, 
+              fontSize: 18, 
+              boxShadow: '0 2px 8px #e0e7ef', 
+              letterSpacing: 1,
+              cursor: loading || !file ? 'not-allowed' : 'pointer',
+              minWidth: '200px'
+            }}
+          >
+            {loading ? 'Đang bóc tách...' : 'Bóc tách thông tin'}
+          </button>
+          
+          <button 
+            onClick={handleContinue}
+            disabled={!isExtracted || !extractedData} // Enable only when extraction is successful AND data is available
+            style={{ 
+              background: (!isExtracted || !extractedData) ? '#9ca3af' : '#10b981', 
+              color: '#fff', 
+              border: 'none', 
+              borderRadius: 10, 
+              padding: '16px 32px', 
+              fontWeight: 700, 
+              fontSize: 18, 
+              boxShadow: '0 2px 8px #e0e7ef', 
+              letterSpacing: 1,
+              cursor: (!isExtracted || !extractedData) ? 'not-allowed' : 'pointer',
+              minWidth: '200px'
+            }}
+          >
+            Tiếp tục
+          </button>
+        </div>
+          </div>
+        </div>
       </div>
     </div>
   );

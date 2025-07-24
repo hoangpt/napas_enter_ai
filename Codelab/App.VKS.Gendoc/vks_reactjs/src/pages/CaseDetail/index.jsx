@@ -9,6 +9,7 @@ function CaseDetail() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('info');
   const [showImageModal, setShowImageModal] = useState(false);
+  const [showPrintScreen, setShowPrintScreen] = useState(false);
 
   // Handle action buttons
   const handleEdit = () => {
@@ -16,7 +17,7 @@ function CaseDetail() {
   };
 
   const handleResolve = () => {
-    navigate(`/case/${id}/update-decision`);
+    navigate(`/update-decision-final/${id}`);
   };
 
   const handlePrint = () => {

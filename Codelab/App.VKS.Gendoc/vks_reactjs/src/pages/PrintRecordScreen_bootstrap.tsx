@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './CaseDetail/style.css';
 
 const PrintRecordScreen: React.FC = () => {

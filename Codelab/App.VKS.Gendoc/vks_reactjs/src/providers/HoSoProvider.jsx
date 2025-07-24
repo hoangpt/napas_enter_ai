@@ -16,7 +16,7 @@ export const HoSoProvider = ({ children }) => {
   const [hoSoList, setHoSoList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const flagFixture = false; // Set to false to use API
+  const flagFixture = true; // Set to true to use fixture data
 
   const fetchHoSoList = async () => {
     setLoading(true);

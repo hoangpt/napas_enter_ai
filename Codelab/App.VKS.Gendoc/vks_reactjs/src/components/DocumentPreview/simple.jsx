@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from 'antd';
-import { EyeOutlined } from '@ant-design/icons';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const DocumentPreviewSimple = ({ documentType, formData, shouldAutoPreview }) => {
   const [showPreview, setShowPreview] = React.useState(false);
@@ -16,13 +15,12 @@ const DocumentPreviewSimple = ({ documentType, formData, shouldAutoPreview }) =>
       <h3>Xem trước tài liệu</h3>
       <p>Loại: {documentType || 'Chưa chọn'}</p>
       {documentType && (
-        <Button 
-          type="primary" 
-          icon={<EyeOutlined />} 
+        <button 
+          className="btn btn-primary"
           onClick={handlePreviewClick}
         >
-          Xem trước
-        </Button>
+          👁️ Xem trước
+        </button>
       )}
       {showPreview && (
         <div style={{ marginTop: '16px', padding: '16px', background: '#fff', borderRadius: '4px' }}>
